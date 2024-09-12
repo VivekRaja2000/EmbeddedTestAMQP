@@ -1,0 +1,52 @@
+{
+  "name": "Embedded Broker",
+  "modelVersion": "9.1",
+  "authenticationproviders": [
+    {
+      "name": "plain",
+      "type": "Plain",
+      "secureOnlyMechanisms": "",
+      "users": [
+        {
+          "name": "admin",
+          "type": "managed",
+          "password": "password"
+        }
+      ]
+    }
+  ],
+  "ports": [
+    {
+      "name": "AMQP",
+      "port": "5674",
+      "authenticationProvider": "plain",
+      "virtualhostaliases": [
+        {
+          "name": "defaultAlias",
+          "type": "defaultAlias"
+        }
+      ]
+    },
+    {
+      "name" : "HTTP",
+      "port" : "5675",
+      "authenticationProvider" : "plain",
+      "allowConfidentialOperationsOnInsecureChannels": "true",
+      "protocols" : [ "HTTP" ],
+      "transports" : ["TCP"]
+    }
+  ],
+  "virtualhostnodes": [
+    {
+      "name": "localvhost",
+      "type": "JSON",
+      "defaultVirtualHostNode": "true",
+      "virtualHostInitialConfiguration": "{\"id\":\"c2276bc3-d4a1-4c2a-b86c-195945ad8b31\",\"type\":\"Memory\",\"name\":\"localvhost\",\"modelVersion\":\"9.1\",\"exchanges\":[{\"id\":\"09822f3e-c001-45f0-aafd-e15e2e3b9ad0\",\"name\":\"amq.direct\",\"type\":\"direct\"},{\"id\":\"1695aecb-457d-4ac2-ba76-657778b042e4\",\"name\":\"amq.fanout\",\"type\":\"fanout\"},{\"id\":\"dac1eedc-0781-4d5a-8039-0b10155185fb\",\"name\":\"amq.match\",\"type\":\"headers\"},{\"id\":\"1f204f69-60cb-4c69-9c7e-1aa5c6932355\",\"name\":\"amq.topic\",\"type\":\"topic\"},{\"id\":\"6e9a14fa-2a91-4bb8-8428-bcc352e1c116\",\"name\":\"MyExchange\",\"type\":\"direct\",\"durable\":true,\"alternateBinding\":null,\"durableBindings\":[{\"destination\":\"testQueue\",\"bindingKey\":\"bindingKey\",\"arguments\":{}}],\"unroutableMessageBehaviour\":\"DISCARD\"}],\"queues\":[{\"id\":\"817f0398-c28d-4118-a5e4-92834fc7feb6\",\"name\":\"testQueue\",\"type\":\"standard\",\"durable\":true,\"holdOnPublishEnabled\":false,\"messageDurability\":\"ALWAYS\",\"overflowPolicy\":\"NONE\",\"createdBy\":\"admin\"}]}"
+    }
+  ],
+  "plugins" : [ {
+    "type" : "MANAGEMENT-HTTP",
+    "name" : "httpManagement",
+    "httpBasicAuthenticationEnabled": true
+  } ]
+}
